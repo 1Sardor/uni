@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
-import { Menu, X, GraduationCap } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import PublicFooter from "@/components/landing/PublicFooter";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useLanguage } from "@/lib/i18n";
 import { useAuth } from "@/lib/AuthContext";
+import logo from "@/assets/logo.png";
 
 const LANGUAGE_META = {
   en: { flag: "🇬🇧", short: "EN" },
@@ -37,10 +38,8 @@ export default function PublicLayout({ dark = false, hideFooter = false }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#070a59] rounded-lg flex items-center justify-center">
-                <GraduationCap size={18} className="text-white" />
-              </div>
-              <span className={`font-display text-lg font-bold ${textColor}`}>StudentPass</span>
+              <img src={logo} alt="UniLink" className="w-8 h-8 object-contain" />
+              <span className={`font-display text-lg font-bold ${textColor}`}>UniLink</span>
             </Link>
 
             <nav className="hidden md:flex items-center gap-8">

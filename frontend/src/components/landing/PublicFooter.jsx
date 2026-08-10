@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { GraduationCap, Apple, Play, Briefcase } from "lucide-react";
+import { Apple, Play, Briefcase } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import logo from "@/assets/logo.png";
 
 export default function PublicFooter() {
   const { t } = useLanguage();
@@ -12,10 +13,10 @@ export default function PublicFooter() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-                <GraduationCap size={18} className="text-[#070a59]" />
+              <div className="w-8 h-8 bg-white rounded-lg overflow-hidden flex items-center justify-center">
+                <img src={logo} alt="UniLink" className="w-full h-full object-contain" />
               </div>
-              <span className="font-display text-lg font-bold">StudentPass</span>
+              <span className="font-display text-lg font-bold">UniLink</span>
             </div>
             <p className="text-white/60 text-sm">{t("footer.tagline")}</p>
           </div>

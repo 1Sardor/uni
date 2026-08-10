@@ -1,9 +1,10 @@
 import React from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, Building2, Tag, LogOut, GraduationCap, ScanLine } from "lucide-react";
+import { LayoutDashboard, Building2, Tag, LogOut, ScanLine } from "lucide-react";
 import { api } from "@/api/apiClient";
 import { useLanguage } from "@/lib/i18n";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import logo from "@/assets/logo.png";
 
 export default function PartnerLayout() {
   const location = useLocation();
@@ -25,11 +26,9 @@ export default function PartnerLayout() {
       <aside className="hidden lg:flex flex-col w-64 p-4">
         <div className="bg-white rounded-3xl shadow-[0_4px_24px_rgba(26,31,46,0.04)] flex flex-col h-full p-5">
           <div className="mb-8 px-2 flex items-center gap-2">
-            <div className="w-9 h-9 bg-navy rounded-xl flex items-center justify-center flex-shrink-0">
-              <GraduationCap size={18} className="text-white" />
-            </div>
+            <img src={logo} alt="UniLink" className="w-9 h-9 object-contain flex-shrink-0" />
             <div>
-              <h1 className="font-display text-lg font-bold text-navy tracking-tight leading-tight">StudentPass</h1>
+              <h1 className="font-display text-lg font-bold text-navy tracking-tight leading-tight">UniLink</h1>
               <p className="text-xs text-muted-foreground leading-tight">{t("partnerDashboard.tagline")}</p>
             </div>
           </div>

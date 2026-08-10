@@ -1,7 +1,7 @@
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
-const TOKEN_KEY = "studentpass_access_token";
-const REFRESH_KEY = "studentpass_refresh_token";
+const TOKEN_KEY = "unilink_access_token";
+const REFRESH_KEY = "unilink_refresh_token";
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -180,7 +180,7 @@ const partnerEntity = (() => {
   };
 })();
 
-const GIFT_LS_KEY = "studentpass_gift_vouchers_v1";
+const GIFT_LS_KEY = "unilink_gift_vouchers_v1";
 
 function loadGifts() {
   try {

@@ -113,7 +113,7 @@ export default function StudentID() {
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <p className="text-white/40 text-[10px] font-semibold uppercase tracking-[0.2em]">StudentPass</p>
+                <p className="text-white/40 text-[10px] font-semibold uppercase tracking-[0.2em]">UniLink</p>
                 <p className="text-white/40 text-[10px] uppercase tracking-wider mt-0.5">{t("dashboard.studentId.title")}</p>
               </div>
               <div className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold ${

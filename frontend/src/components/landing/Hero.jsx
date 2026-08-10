@@ -16,10 +16,6 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
             className="text-center lg:text-left"
           >
-            <div className="inline-flex items-center gap-2 bg-[#FFF8E0] text-[#070a59] text-xs font-semibold px-4 py-2 rounded-full mb-6">
-              <span className="w-2 h-2 bg-[#FFD500] rounded-full animate-pulse" />
-              {t("hero.badge")}
-            </div>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#070a59] leading-[1.1] tracking-tight">
               {t("hero.title")}
             </h1>

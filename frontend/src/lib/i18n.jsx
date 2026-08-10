@@ -4,7 +4,7 @@ import ru from "@/locales/ru";
 import uz from "@/locales/uz";
 
 const dictionaries = { en, ru, uz };
-const LANG_KEY = "studentpass_lang";
+const LANG_KEY = "unilink_lang";
 
 const LanguageContext = createContext(null);
 

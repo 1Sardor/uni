@@ -4,6 +4,7 @@ import { LayoutDashboard, PiggyBank, Gift, CalendarDays, IdCard, LogOut } from "
 import { api } from "@/api/apiClient";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useLanguage } from "@/lib/i18n";
+import logo from "@/assets/logo.png";
 
 export default function AppLayout() {
   const location = useLocation();
@@ -25,9 +26,12 @@ export default function AppLayout() {
     <div className="h-screen bg-pastel-canvas flex">
       <aside className="hidden lg:flex flex-col w-64 p-4">
         <div className="bg-white rounded-3xl shadow-[0_4px_24px_rgba(26,31,46,0.04)] flex flex-col h-full p-5">
-          <div className="mb-8 px-2">
-            <h1 className="font-display text-xl font-bold text-navy tracking-tight">StudentPass</h1>
-            <p className="text-xs text-muted-foreground mt-0.5">{t("dashboard.nav.tagline")}</p>
+          <div className="mb-8 px-2 flex items-center gap-2">
+            <img src={logo} alt="UniLink" className="w-9 h-9 object-contain" />
+            <div>
+              <h1 className="font-display text-xl font-bold text-navy tracking-tight">UniLink</h1>
+              <p className="text-xs text-muted-foreground mt-0.5">{t("dashboard.nav.tagline")}</p>
+            </div>
           </div>
           <nav className="flex-1 space-y-1">
             {navItems.map((item) => {
