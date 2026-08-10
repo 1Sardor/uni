@@ -9,9 +9,6 @@ import EventPreviewCard from "@/components/dashboard/EventPreviewCard";
 import CompleteProfileModal from "@/components/dashboard/CompleteProfileModal";
 import { useLanguage } from "@/lib/i18n";
 
-const isProfileComplete = (profile) =>
-  !!(profile?.first_name && profile?.last_name && profile?.major && profile?.year_of_study && profile?.student_id_number && profile?.student_card_image);
-
 export default function Home() {
   const { t } = useLanguage();
   const [user, setUser] = useState(null);
@@ -29,7 +26,11 @@ export default function Home() {
         const profiles = await api.entities.StudentProfile.filter({ created_by_id: u.id });
         const loadedProfile = profiles.length > 0 ? profiles[0] : null;
         if (loadedProfile) setProfile(loadedProfile);
-        if (!isProfileComplete(loadedProfile)) setShowProfileModal(true);
+        const promptKey = `unilink_profile_prompt_seen_${u.id}`;
+        if (!loadedProfile && !localStorage.getItem(promptKey)) {
+          localStorage.setItem(promptKey, "1");
+          setShowProfileModal(true);
+        }
         const c = await api.entities.ClaimedDiscount.list("-created_date", 50);
         setClaimed(c);
         const e = await api.entities.CampusEvent.list("-event_date", 3);
