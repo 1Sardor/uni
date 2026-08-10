@@ -6,7 +6,7 @@ import { useLanguage } from "@/lib/i18n";
 
 export default function DigitalIDCard({ profile, userName }) {
   const { t } = useLanguage();
-  const name = profile?.student_name || userName || "Student";
+  const name = profile?.full_name || userName || "Student";
   const uni = profile?.university || t("dashboard.studentId.yourUniversity");
   const idNum = profile?.student_id_number || "—";
   const major = profile?.major || t("dashboard.digitalIdCard.notSet");

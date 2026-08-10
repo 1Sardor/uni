@@ -122,14 +122,20 @@ class ClaimedDiscount(TimestampedModel):
 
 class StudentProfile(TimestampedModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
-    student_name = models.CharField(max_length=255, blank=True)
+    first_name = models.CharField(max_length=255, blank=True)
+    last_name = models.CharField(max_length=255, blank=True)
     university = models.CharField(max_length=255, blank=True)
     student_id_number = models.CharField(max_length=100, blank=True)
     major = models.CharField(max_length=255, blank=True)
     year_of_study = models.CharField(max_length=50, blank=True)
+    student_card_image = models.ImageField(upload_to='student_cards/', blank=True)
     id_verified = models.BooleanField(default=False)
     chat_id = models.BigIntegerField(null=True, blank=True)
     verification_token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'.strip()
 
 
 class Partner(TimestampedModel):

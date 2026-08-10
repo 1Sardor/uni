@@ -131,8 +131,8 @@ TELEGRAM_BOT_USERNAME = os.environ.get('TELEGRAM_BOT_USERNAME', '')
 TELEGRAM_WEBHOOK_SECRET = os.environ.get('TELEGRAM_WEBHOOK_SECRET', '')
 
 UNFOLD = {
-    'SITE_TITLE': 'StudentPass Admin',
-    'SITE_HEADER': 'StudentPass',
+    'SITE_TITLE': 'UniLink Admin',
+    'SITE_HEADER': 'UniLink',
     'SITE_SUBHEADER': 'Admin panel',
     'THEME': None,
     'DASHBOARD_CALLBACK': 'campus.dashboard.dashboard_callback',

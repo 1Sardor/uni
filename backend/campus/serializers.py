@@ -60,6 +60,8 @@ class ClaimedDiscountSerializer(serializers.ModelSerializer):
 
 
 class StudentProfileSerializer(serializers.ModelSerializer):
+    full_name = serializers.ReadOnlyField()
+
     class Meta:
         model = StudentProfile
         fields = '__all__'

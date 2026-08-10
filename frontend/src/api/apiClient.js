@@ -133,10 +133,25 @@ const claimedDiscountEntity = makeRestEntity("/claimed-discounts/", {
 
 const studentProfileEntity = (() => {
   const base = makeRestEntity("/student-profiles/");
+  const toFormData = (data) => {
+    const fd = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      if (value === undefined || value === null) return;
+      if (key === "student_card_image" && !(value instanceof File)) return;
+      fd.append(key, value);
+    });
+    return fd;
+  };
   return {
     ...base,
     async filter() {
       return base.list();
+    },
+    async create(data) {
+      return request("/student-profiles/", { method: "POST", formData: toFormData(data) });
+    },
+    async update(id, data) {
+      return request(`/student-profiles/${id}/`, { method: "PATCH", formData: toFormData(data) });
     },
     async verify(token) {
       return request(`/student-profiles/verify/${token}/`);

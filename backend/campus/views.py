@@ -144,7 +144,7 @@ class DiscountViewSet(BaseEntityViewSet):
 
         return Response({
             'message': 'Discount claimed',
-            'student_name': profile.student_name or profile.user.get_full_name() or profile.user.username,
+            'student_name': profile.full_name or profile.user.get_full_name() or profile.user.username,
         })
 
 
@@ -318,7 +318,7 @@ class StudentVerifyView(APIView):
 
         return Response({
             'valid': True,
-            'student_name': profile.student_name or profile.user.get_full_name() or profile.user.username,
+            'student_name': profile.full_name or profile.user.get_full_name() or profile.user.username,
             'university': profile.university,
             'major': profile.major,
             'year_of_study': profile.year_of_study,

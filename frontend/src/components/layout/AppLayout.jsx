@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, PiggyBank, Gift, CalendarDays, IdCard, LogOut } from "lucide-react";
+import { LayoutDashboard, Wallet, Gift, CalendarDays, IdCard, LogOut } from "lucide-react";
 import { api } from "@/api/apiClient";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useLanguage } from "@/lib/i18n";
@@ -12,7 +12,7 @@ export default function AppLayout() {
 
   const navItems = [
     { icon: LayoutDashboard, label: t("dashboard.nav.dashboard"), path: "/dashboard" },
-    { icon: PiggyBank, label: t("dashboard.nav.savings"), path: "/savings" },
+    { icon: Wallet, label: t("dashboard.nav.savings"), path: "/savings" },
     { icon: Gift, label: t("dashboard.nav.gifting"), path: "/gifting" },
     { icon: CalendarDays, label: t("dashboard.nav.events"), path: "/events" },
     { icon: IdCard, label: t("dashboard.nav.studentId"), path: "/student-id" },
@@ -28,10 +28,7 @@ export default function AppLayout() {
         <div className="bg-white rounded-3xl shadow-[0_4px_24px_rgba(26,31,46,0.04)] flex flex-col h-full p-5">
           <div className="mb-8 px-2 flex items-center gap-2">
             <img src={logo} alt="UniLink" className="w-9 h-9 object-contain" />
-            <div>
-              <h1 className="font-display text-xl font-bold text-navy tracking-tight">UniLink</h1>
-              <p className="text-xs text-muted-foreground mt-0.5">{t("dashboard.nav.tagline")}</p>
-            </div>
+            <h1 className="font-display text-xl font-bold text-navy tracking-tight">UniLink</h1>
           </div>
           <nav className="flex-1 space-y-1">
             {navItems.map((item) => {

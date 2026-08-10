@@ -63,7 +63,7 @@ def _call(method, payload):
 
 
 def send_message(chat_id, text, request_contact=False, remove_keyboard=False):
-    payload = {'chat_id': chat_id, 'text': text}
+    payload = {'chat_id': chat_id, 'text': text, 'parse_mode': 'HTML'}
     if request_contact:
         payload['reply_markup'] = {
             'keyboard': [[{'text': '📱 Share phone number', 'request_contact': True}]],
@@ -115,7 +115,7 @@ def handle_update(update):
         code = _issue_code(phone_number, telegram_id, telegram_username)
         send_message(
             chat_id,
-            f'Your StudentPass login code is {code}.\n'
+            f'Your UniLink login code is <code>{code}</code>.\n'
             'Enter it on the website to log in. It expires in 5 minutes.',
             remove_keyboard=True,
         )
@@ -126,14 +126,14 @@ def handle_update(update):
         code = _issue_code(existing_user.phone_number, telegram_id, telegram_username)
         send_message(
             chat_id,
-            f'Welcome back! Your StudentPass login code is {code}.\n'
+            f'Welcome back! Your UniLink login code is <code>{code}</code>.\n'
             'Enter it on the website to log in.',
         )
         return
 
     send_message(
         chat_id,
-        'Welcome to StudentPass! Tap the button below to share your phone number '
+        'Welcome to UniLink! Tap the button below to share your phone number '
         'and receive a login code.',
         request_contact=True,
     )

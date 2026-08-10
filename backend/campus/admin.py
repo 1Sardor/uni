@@ -59,9 +59,9 @@ class ClaimedDiscountAdmin(ModelAdmin):
 
 @admin.register(StudentProfile)
 class StudentProfileAdmin(ModelAdmin):
-    list_display = ['student_name', 'user', 'university', 'student_id_number', 'year_of_study', 'id_verified']
+    list_display = ['first_name', 'last_name', 'user', 'university', 'student_id_number', 'year_of_study', 'id_verified']
     list_filter = ['id_verified', 'university']
-    search_fields = ['student_name', 'user__username', 'student_id_number']
+    search_fields = ['first_name', 'last_name', 'user__username', 'student_id_number']
 
 
 @admin.register(TelegramLoginCode)

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import QRCode from "qrcode";
 import { api } from "@/api/apiClient";
 import { motion } from "framer-motion";
-import { ShieldCheck, BadgeCheck, Save, User, GraduationCap, QrCode } from "lucide-react";
+import { ShieldCheck, BadgeCheck, Save, User, GraduationCap, QrCode, UploadCloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,12 +18,16 @@ export default function StudentID() {
   const [saving, setSaving] = useState(false);
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({
-    student_name: "",
+    first_name: "",
+    last_name: "",
     university: "",
     student_id_number: "",
     major: "",
     year_of_study: "",
   });
+  const [cardFile, setCardFile] = useState(null);
+  const [cardPreview, setCardPreview] = useState(null);
+  const fileInputRef = useRef(null);
   const [qrDataUrl, setQrDataUrl] = useState(null);
   const { toast } = useToast();
 
@@ -45,14 +49,15 @@ export default function StudentID() {
         if (profiles.length > 0) {
           setProfile(profiles[0]);
           setForm({
-            student_name: profiles[0].student_name || "",
+            first_name: profiles[0].first_name || "",
+            last_name: profiles[0].last_name || "",
             university: profiles[0].university || "",
             student_id_number: profiles[0].student_id_number || "",
             major: profiles[0].major || "",
             year_of_study: profiles[0].year_of_study || "",
           });
+          setCardPreview(profiles[0].student_card_image || null);
         } else {
-          setForm((f) => ({ ...f, student_name: u.full_name || "" }));
           setEditing(true);
         }
       } catch (e) {}
@@ -61,20 +66,29 @@ export default function StudentID() {
     load();
   }, []);
 
+  const handleCardChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setCardFile(file);
+    setCardPreview(URL.createObjectURL(file));
+  };
+
   const handleSave = async () => {
-    if (!form.student_name || !form.university || !form.student_id_number) {
+    if (!form.first_name || !form.last_name || !form.university || !form.student_id_number) {
       toast({ title: t("dashboard.studentId.fillRequired"), variant: "destructive" });
       return;
     }
     setSaving(true);
     try {
+      const payload = { ...form, ...(cardFile ? { student_card_image: cardFile } : {}) };
       if (profile) {
-        await api.entities.StudentProfile.update(profile.id, form);
-        setProfile({ ...profile, ...form });
+        const updated = await api.entities.StudentProfile.update(profile.id, payload);
+        setProfile({ ...profile, ...updated });
       } else {
-        const created = await api.entities.StudentProfile.create(form);
+        const created = await api.entities.StudentProfile.create(payload);
         setProfile(created);
       }
+      setCardFile(null);
       setEditing(false);
       toast({ title: t("dashboard.studentId.profileSaved") });
     } catch (e) {
@@ -129,7 +143,7 @@ export default function StudentID() {
                 <User size={32} className="text-white/30" />
               </div>
               <div>
-                <h2 className="font-display text-2xl font-bold">{profile?.student_name || form.student_name || t("dashboard.studentId.yourName")}</h2>
+                <h2 className="font-display text-2xl font-bold">{profile?.full_name || [form.first_name, form.last_name].filter(Boolean).join(" ") || t("dashboard.studentId.yourName")}</h2>
                 <p className="text-white/50 text-sm mt-0.5">{profile?.university || form.university || t("dashboard.studentId.yourUniversity")}</p>
               </div>
             </div>
@@ -189,15 +203,25 @@ export default function StudentID() {
         </div>
 
         <div className="space-y-4">
-          <div>
-            <Label className="text-xs font-medium text-muted-foreground">{t("dashboard.studentId.fullName")}</Label>
-            <Input
-              value={form.student_name}
-              onChange={(e) => setForm({ ...form, student_name: e.target.value })}
-              disabled={!editing}
-              className="mt-1 rounded-xl h-11"
-              placeholder="Your full name"
-            />
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label className="text-xs font-medium text-muted-foreground">{t("dashboard.studentId.firstName")}</Label>
+              <Input
+                value={form.first_name}
+                onChange={(e) => setForm({ ...form, first_name: e.target.value })}
+                disabled={!editing}
+                className="mt-1 rounded-xl h-11"
+              />
+            </div>
+            <div>
+              <Label className="text-xs font-medium text-muted-foreground">{t("dashboard.studentId.lastName")}</Label>
+              <Input
+                value={form.last_name}
+                onChange={(e) => setForm({ ...form, last_name: e.target.value })}
+                disabled={!editing}
+                className="mt-1 rounded-xl h-11"
+              />
+            </div>
           </div>
           <div>
             <Label className="text-xs font-medium text-muted-foreground">{t("dashboard.studentId.university")}</Label>
@@ -243,6 +267,26 @@ export default function StudentID() {
                   })}
                 </SelectContent>
               </Select>
+            </div>
+          </div>
+
+          <div>
+            <Label className="text-xs font-medium text-muted-foreground">{t("dashboard.studentId.studentCard")}</Label>
+            <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleCardChange} />
+            <div className="mt-1 flex items-center gap-3">
+              <div className="w-16 h-16 rounded-xl bg-pastel-canvas flex-shrink-0 overflow-hidden flex items-center justify-center">
+                {cardPreview ? (
+                  <img src={cardPreview} alt="Student card" className="w-full h-full object-cover" />
+                ) : (
+                  <User size={20} className="text-navy/30" />
+                )}
+              </div>
+              {editing && (
+                <Button type="button" variant="outline" size="sm" className="rounded-xl gap-2" onClick={() => fileInputRef.current?.click()}>
+                  <UploadCloud size={14} />
+                  {cardPreview ? t("dashboard.studentId.changeCard") : t("dashboard.studentId.uploadCard")}
+                </Button>
+              )}
             </div>
           </div>
 
