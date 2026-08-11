@@ -173,9 +173,14 @@ export default function PartnerScan() {
           </div>
 
           <div className="relative rounded-2xl overflow-hidden bg-navy/95 aspect-square max-w-sm mx-auto flex items-center justify-center">
-            {scanning ? (
-              <video ref={videoRef} className="w-full h-full object-cover" muted playsInline />
-            ) : (
+            <video
+              ref={videoRef}
+              className={`w-full h-full object-cover ${scanning ? "" : "hidden"}`}
+              muted
+              autoPlay
+              playsInline
+            />
+            {!scanning && (
               <div className="flex flex-col items-center gap-2 text-white/50 p-6 text-center">
                 <Camera size={32} />
                 <p className="text-xs">{t("partnerDashboard.scan.cameraIdle")}</p>

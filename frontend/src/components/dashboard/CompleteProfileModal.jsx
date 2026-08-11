@@ -32,10 +32,6 @@ export default function CompleteProfileModal({ open, onOpenChange, profile, onSa
   };
 
   const handleSave = async () => {
-    if (!form.first_name || !form.last_name || !form.major || !form.year_of_study || !form.student_id_number || (!cardFile && !profile?.student_card_image)) {
-      toast({ title: t("dashboard.completeProfile.fillRequired"), variant: "destructive" });
-      return;
-    }
     setSaving(true);
     try {
       const payload = { ...form, ...(cardFile ? { student_card_image: cardFile } : {}) };

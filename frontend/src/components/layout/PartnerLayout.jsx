@@ -26,7 +26,7 @@ export default function PartnerLayout() {
       <aside className="hidden lg:flex flex-col w-64 p-4">
         <div className="bg-white rounded-3xl shadow-[0_4px_24px_rgba(26,31,46,0.04)] flex flex-col h-full p-5">
           <div className="mb-8 px-2 flex items-center gap-2">
-            <img src={logo} alt="UniLink" className="w-9 h-9 object-contain flex-shrink-0" />
+            <img src={logo} alt="UniLink" className="w-12 h-12 object-contain flex-shrink-0" />
             <div>
               <h1 className="font-display text-lg font-bold text-navy tracking-tight leading-tight">UniLink</h1>
               <p className="text-xs text-muted-foreground leading-tight">{t("partnerDashboard.tagline")}</p>
